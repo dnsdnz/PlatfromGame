@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,4 +23,23 @@ public class GameManager : MonoBehaviour
         gamePlayObjects.SetActive(false);
         InputController.Instance.isTouched = false;  //stop character when back to menu
     }
+
+    #region Special Power Buttons
+    public void AddBulletsButton()
+    {
+        
+    }
+    public void DoubleBulletsButton()
+    {
+        
+    }
+    public void IncreaseFrequencyButton()
+    {
+        
+    }
+    public void DoubleSpeedButton()
+    {
+        CharacterController.Instance.speed *= 2f;
+    }
+    #endregion
 }
