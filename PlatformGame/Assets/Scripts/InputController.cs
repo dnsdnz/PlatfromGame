@@ -1,0 +1,111 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class InputController : MonoBehaviour
+{
+    public static InputController Instance; //access this script from other scripts
+
+    [HideInInspector] public bool isTouched, isTouchStop, swipeLeft, swipeRight, swipeUp, swipeDown; //movement status
+    [HideInInspector] public Vector2 swipeDelta; //distances between current and touch positions
+    [HideInInspector] public Vector2 startTouch; //first position of touch
+    private const float deadZone = 100; //If deadzone increases, sensitivity increases(motion change captured with more detail)
+
+    private void Awake()
+    {
+        Instance = this;
+    } 
+//*********// Input.GetTouch(i).phase enum species for help to coding //*********
+    //TouchPhase.Began --->>> Check is there any touch
+    //TouchPhase.Stationary --->> There is touch but not move, it is stable
+    //TouchPhase.Moved --->> There is touch and it is moving
+    //TouchPhase.Ended --->> Touch stopped
+    //TouchPhase.Canceled --->> If some problem about touch follow
+//*********//                                                        //*********
+    private void Update()
+    {
+        isTouched = isTouchStop = swipeLeft = swipeRight = swipeDown = swipeUp = false; //reset all data 
+
+        #region Input Controls
+        if (Input.GetMouseButtonDown(0))  //left mouse button clicked
+        {   
+            isTouched = true;
+            startTouch = Input.mousePosition; //first position of click
+        }
+        else if (Input.GetMouseButtonUp(0)) //left click done
+        {
+            startTouch = swipeDelta = Vector2.zero; //reset position when click stopped
+        }
+        
+        if (Input.touches.Length != 0) //if there is touch
+        {
+            if (Input.touches[0].phase == TouchPhase.Began) //screen touch start
+            {
+                isTouched = true;
+                startTouch = Input.mousePosition; //first position of touch
+            }
+            else if (Input.touches[0].phase == TouchPhase.Ended ||
+                     Input.touches[0].phase == TouchPhase.Canceled)  //screen touch done or there is a problem
+            {
+                startTouch = swipeDelta = Vector2.zero; //reset position when touch stopped
+            }
+            else if (Input.touches[0].phase == TouchPhase.Stationary)  //No movement but there is touch
+            {
+                
+            }
+        }
+        #endregion
+
+        #region Calculate distances between current position and new touch position
+        swipeDelta = Vector2.zero;
+        if (startTouch != Vector2.zero) // if there is movement
+        {
+            if (Input.touches.Length != 0) //for mobile
+            {
+                swipeDelta = Input.touches[0].position - startTouch;
+            }
+            else if (Input.GetMouseButton(0)) //for desktop
+            {
+                swipeDelta = (Vector2) Input.mousePosition - startTouch;
+            }
+        }
+        #endregion
+        
+        #region Find direction of the movement
+        if (swipeDelta.magnitude > deadZone) //vector length greater than deadzone, there is swipe
+        {
+            float x = swipeDelta.x; //length of movement in x axis
+            float y = swipeDelta.y; //length of movement in y axis
+
+            if (Mathf.Abs(x) > Mathf.Abs(y)) //movement direction is left or right,
+                                             //calculate norm of the vectors with absolute value
+            {
+                if (x < 0) //left
+                {
+                    swipeLeft = true;
+                    Debug.Log("Swipe Left");
+                }
+                else //right
+                {
+                    swipeRight = true;
+                    Debug.Log("Swipe Right");
+                }
+            }
+            else //movement direction is up or down
+            {
+                if (y < 0) //down
+                {
+                    swipeDown = true;
+                    Debug.Log("Swipe Down");
+                }
+                else //up
+                {
+                    swipeUp = true;
+                    Debug.Log("Swipe Up");
+                }
+            }
+            startTouch = swipeDelta = Vector2.zero;  //reset vectors in each calculation's end
+        }
+        #endregion
+    }
+}
