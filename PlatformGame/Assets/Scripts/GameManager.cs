@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public GameObject menuPanel;
     public GameObject gamePlayPanel;
     public GameObject gamePlayObjects;
+    
     public void StartGameButton()
     {
         InputController.Instance.startTouch = Vector2.zero;  //reset position when game start
@@ -35,11 +36,15 @@ public class GameManager : MonoBehaviour
     }
     public void IncreaseFrequencyButton()
     {
-        
+        BulletController.Instance.fireRate = 1;  //shoot in every 1 second
     }
-    public void DoubleSpeedButton()
+    public void DoubleBulletSpeedButton()
     {
-        CharacterController.Instance.speed *= 2f;
+        BulletController.Instance.bulletSpeed *= 2f;  //double bullet speed
+    }
+    public void DoublePlayerSpeedButton()
+    {
+        CharacterController.Instance.speed *= 2f;  //double character speed
     }
     #endregion
 }

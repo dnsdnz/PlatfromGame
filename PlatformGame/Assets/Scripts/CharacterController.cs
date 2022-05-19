@@ -46,4 +46,12 @@ public class CharacterController : MonoBehaviour
             rb.velocity = Vector3.zero;  //stop character
         }
     }
+    private void OnCollisionEnter (Collision col) //detect finish collider
+    {
+        if (col.gameObject.tag == "Finish")
+        {
+            Debug.Log("hit");
+            InputController.Instance.isTouched = false;  //stop character when finish
+        }
+    }
 }

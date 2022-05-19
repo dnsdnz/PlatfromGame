@@ -11,7 +11,6 @@ public class InputController : MonoBehaviour
     [HideInInspector] public Vector2 startTouch; //first position of touch
 
     private const float deadZone = 100; //If deadzone increases, sensitivity increases(motion change captured with more detail)
-
     private void Awake()
     {
         Instance = this;
