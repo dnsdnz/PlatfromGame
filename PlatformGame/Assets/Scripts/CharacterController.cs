@@ -8,9 +8,11 @@ public class CharacterController : MonoBehaviour
     public static CharacterController Instance; //access this script from other scripts
     public float speed; //character's speed
     public Rigidbody rb; //character's rigidbody from editor
+    public bool isLevelFinish;
     private void Awake()
     {
         Instance = this;
+        isLevelFinish = false;
     }
 
     //FixedUpdate preferred‘cos it runs at a fixed interval related to game’s frame rate,
@@ -50,8 +52,8 @@ public class CharacterController : MonoBehaviour
     {
         if (col.gameObject.tag == "Finish")
         {
-            Debug.Log("hit");
-            InputController.Instance.isTouched = false;  //stop character when finish
+            //Debug.Log("hit");
+            isLevelFinish = true;
         }
     }
 }

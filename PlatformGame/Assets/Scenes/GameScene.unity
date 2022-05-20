@@ -368,6 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 100
   rb: {fileID: 221970802}
+  isLevelFinish: 0
 --- !u!54 &221970802
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1737,7 +1738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &979238249
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1775,7 +1776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1035847468
 RectTransform:
   m_ObjectHideFlags: 0
