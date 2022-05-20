@@ -1,1 +1,1 @@
-# PlatfromGame
+# PlatformGame
